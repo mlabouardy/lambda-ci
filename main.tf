@@ -68,7 +68,8 @@ resource "aws_iam_policy" "lambda_policy" {
     {
       "Action": [
         "lambda:UpdateFunctionCode",
-        "lambda:PublishVersion"
+        "lambda:PublishVersion",
+        "lambda:UpdateAlias"
       ],
       "Effect": "Allow",
       "Resource": "*"
