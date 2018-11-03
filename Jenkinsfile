@@ -11,7 +11,7 @@ node('slaves'){
         sh 'go get -u github.com/golang/lint/golint'
         sh 'go get -t ./...'
         //sh 'golint -set_exit_status'
-        sh 'CGO_ENABLED=0 go vet .'
+        sh 'go vet .'
         sh 'go test .'
     }
 
