@@ -30,6 +30,13 @@ node('slaves'){
                 --s3-key ${commitID()}.zip \
                 --region ${region}"
     }
+
+    if (env.BRANCH_NAME == 'master') {
+        stage('Publish') {
+            sh "aws lambda publish-version --function-name ${functionName} \
+                    --region ${region}"
+        }
+    }
 }
 
 def commitID() {
