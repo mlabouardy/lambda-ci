@@ -33,8 +33,11 @@ node('slaves'){
 
     if (env.BRANCH_NAME == 'master') {
         stage('Publish') {
-            sh "lambdaVersion=\$(aws lambda publish-version --function-name ${functionName} --region ${region} | jq '.Version')"
-            sh "echo $lambdaVersion"
+            def lambdaVersion = sh(
+                script: "aws lambda publish-version --function-name ${functionName} --region ${region} | jq -r '.Version'",
+                returnStdout: true
+            )
+            sh "aws lambda update-alias --function-name ${functionName} --name production --function-version ${lambdaVersion} --region ${region}"
         }
     }
 }
